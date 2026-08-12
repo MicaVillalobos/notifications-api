@@ -11,6 +11,7 @@ def test_register_success(client):
     assert "hashed_password" not in data
     assert "password" not in data
 
+
 def test_register_duplicate_email(client):
     payload = {"email": "dup@example.com", "password": "password123"}
     client.post("/auth/register", json=payload)
@@ -78,6 +79,7 @@ def test_login_nonexistent_user(client):
 
     assert response.status_code == 401
 
+
 def test_get_me(client):
     client.post("/auth/register", json={"email": "me@example.com", "password": "password123"})
     login = client.post("/auth/login", json={"email": "me@example.com", "password": "password123"})
@@ -102,8 +104,13 @@ def test_me_invalid_token(client):
 
 
 def test_refresh_token(client):
-    client.post("/auth/register", json={"email": "refresh@example.com", "password": "password123"})
-    login = client.post("/auth/login", json={"email": "refresh@example.com", "password": "password123"})
+    client.post(
+        "/auth/register",
+        json={"email": "refresh@example.com", "password": "password123"},
+    )
+    login = client.post(
+        "/auth/login", json={"email": "refresh@example.com", "password": "password123"}
+    )
     refresh_token = login.json()["refresh_token"]
 
     response = client.post("/auth/refresh", json={"refresh_token": refresh_token})
@@ -115,8 +122,13 @@ def test_refresh_token(client):
 
 
 def test_refresh_with_access_token_fails(client):
-    client.post("/auth/register", json={"email": "refresh2@example.com", "password": "password123"})
-    login = client.post("/auth/login", json={"email": "refresh2@example.com", "password": "password123"})
+    client.post(
+        "/auth/register",
+        json={"email": "refresh2@example.com", "password": "password123"},
+    )
+    login = client.post(
+        "/auth/login", json={"email": "refresh2@example.com", "password": "password123"}
+    )
     access_token = login.json()["access_token"]
 
     response = client.post("/auth/refresh", json={"refresh_token": access_token})

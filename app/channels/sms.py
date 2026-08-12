@@ -13,7 +13,11 @@ class SmsChannel(Canal):
         # 1. Limitar el contenido a 160 caracteres
         contenido = self._truncar_contenido(notification.content)
         # 2. Registrar número y fecha de envío
-        logger.info("SMS enviado | destinatario=%s | contenido=%s", notification.user_id, contenido)
+        logger.info(
+            "SMS enviado | destinatario=%s | contenido=%s",
+            notification.user_id,
+            contenido,
+        )
 
     def _truncar_contenido(self, content: str) -> str:
         if len(content) > SMS_MAX_LENGTH:

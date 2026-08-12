@@ -44,7 +44,9 @@ def get_notification(
 ):
     notification = service.get(notification_id, current_user.id)
     if notification is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Notificación no encontrada")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Notificación no encontrada"
+        )
     return notification
 
 
@@ -57,7 +59,9 @@ def update_notification(
 ):
     notification = service.update(notification_id, data, current_user.id)
     if notification is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Notificación no encontrada")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Notificación no encontrada"
+        )
     return notification
 
 
@@ -69,4 +73,6 @@ def delete_notification(
 ):
     deleted = service.delete(notification_id, current_user.id)
     if not deleted:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Notificación no encontrada")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Notificación no encontrada"
+        )

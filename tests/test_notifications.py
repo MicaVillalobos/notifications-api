@@ -17,6 +17,7 @@ def test_create_notification(client, auth_headers):
     assert "id" in data
     assert "user_id" in data
 
+
 def test_create_notification_all_channels(client, auth_headers):
     for channel in ("email", "sms", "push"):
         response = client.post(
@@ -47,10 +48,16 @@ def test_create_notification_requires_auth(client):
 
 
 def test_list_notifications(client, auth_headers):
-    client.post("/notifications", headers=auth_headers,
-                json={"title": "A", "content": "C", "channel": "email"})
-    client.post("/notifications", headers=auth_headers,
-                json={"title": "B", "content": "C", "channel": "sms"})
+    client.post(
+        "/notifications",
+        headers=auth_headers,
+        json={"title": "A", "content": "C", "channel": "email"},
+    )
+    client.post(
+        "/notifications",
+        headers=auth_headers,
+        json={"title": "B", "content": "C", "channel": "sms"},
+    )
 
     response = client.get("/notifications", headers=auth_headers)
 
@@ -59,8 +66,11 @@ def test_list_notifications(client, auth_headers):
 
 
 def test_get_notification(client, auth_headers):
-    created = client.post("/notifications", headers=auth_headers,
-                          json={"title": "A", "content": "C", "channel": "email"})
+    created = client.post(
+        "/notifications",
+        headers=auth_headers,
+        json={"title": "A", "content": "C", "channel": "email"},
+    )
     notification_id = created.json()["id"]
 
     response = client.get(f"/notifications/{notification_id}", headers=auth_headers)
@@ -75,8 +85,11 @@ def test_get_notification_not_found(client, auth_headers):
 
 
 def test_update_notification_partial(client, auth_headers):
-    created = client.post("/notifications", headers=auth_headers,
-                          json={"title": "Original", "content": "Contenido", "channel": "email"})
+    created = client.post(
+        "/notifications",
+        headers=auth_headers,
+        json={"title": "Original", "content": "Contenido", "channel": "email"},
+    )
     notification_id = created.json()["id"]
 
     response = client.put(
@@ -92,8 +105,11 @@ def test_update_notification_partial(client, auth_headers):
 
 
 def test_delete_notification(client, auth_headers):
-    created = client.post("/notifications", headers=auth_headers,
-                          json={"title": "A", "content": "C", "channel": "email"})
+    created = client.post(
+        "/notifications",
+        headers=auth_headers,
+        json={"title": "A", "content": "C", "channel": "email"},
+    )
     notification_id = created.json()["id"]
 
     delete_response = client.delete(f"/notifications/{notification_id}", headers=auth_headers)
@@ -101,6 +117,7 @@ def test_delete_notification(client, auth_headers):
 
     get_response = client.get(f"/notifications/{notification_id}", headers=auth_headers)
     assert get_response.status_code == 404
+
 
 def _register_and_login(client, email):
     client.post("/auth/register", json={"email": email, "password": "password123"})
@@ -165,10 +182,16 @@ def test_list_only_returns_own_notifications(client):
     alice = _register_and_login(client, "alice4@example.com")
     bob = _register_and_login(client, "bob4@example.com")
 
-    client.post("/notifications", headers=alice,
-                json={"title": "De Alice", "content": "C", "channel": "email"})
-    client.post("/notifications", headers=bob,
-                json={"title": "De Bob", "content": "C", "channel": "sms"})
+    client.post(
+        "/notifications",
+        headers=alice,
+        json={"title": "De Alice", "content": "C", "channel": "email"},
+    )
+    client.post(
+        "/notifications",
+        headers=bob,
+        json={"title": "De Bob", "content": "C", "channel": "sms"},
+    )
 
     alice_list = client.get("/notifications", headers=alice)
     bob_list = client.get("/notifications", headers=bob)
@@ -177,6 +200,7 @@ def test_list_only_returns_own_notifications(client):
     assert len(bob_list.json()) == 1
     assert alice_list.json()[0]["title"] == "De Alice"
     assert bob_list.json()[0]["title"] == "De Bob"
+
 
 def test_notification_persisted_when_send_fails(client, auth_headers, monkeypatch):
     def fail_send(self, notification):

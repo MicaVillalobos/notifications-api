@@ -1,0 +1,25 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: cimg/python:3.13
+    steps:
+      - checkout
+      - run:
+          name: Install uv
+          command: curl -LsSf https://astral.sh/uv/install.sh | sh
+      - run:
+          name: Install dependencies
+          command: uv sync --frozen
+      - run:
+          name: Lint with Ruff
+          command: uv run ruff check .
+      - run:
+          name: Run tests with coverage
+          command: uv run pytest --cov=app --cov-report=term-missing
+
+workflows:
+  test-workflow:
+    jobs:
+      - test

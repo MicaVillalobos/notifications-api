@@ -21,7 +21,7 @@ def register(data: UserCreate, service: AuthService = Depends(get_auth_service))
     try:
         return service.register(data)
     except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e)) from e
 
 
 @router.post("/login", response_model=Token)
@@ -29,7 +29,7 @@ def login(data: UserLogin, service: AuthService = Depends(get_auth_service)):
     try:
         return service.login(data)
     except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail=str(e)) from e
 
 
 @router.post("/refresh", response_model=Token)

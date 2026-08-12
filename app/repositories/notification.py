@@ -24,11 +24,7 @@ class NotificationRepository:
         )
 
     def list_by_user(self, user_id: int) -> list[Notification]:
-        return (
-            self.db.query(Notification)
-            .filter(Notification.user_id == user_id)
-            .all()
-        )
+        return self.db.query(Notification).filter(Notification.user_id == user_id).all()
 
     def update(self, notification: Notification) -> Notification:
         self.db.commit()

@@ -12,10 +12,18 @@ class Notification(Base):
     content = Column(Text, nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     channel = Column(
-    Enum(CanalTipo, values_callable=lambda enum_class: [member.value for member in enum_class]),
-    nullable=False,)
+        Enum(
+            CanalTipo,
+            values_callable=lambda enum_class: [member.value for member in enum_class],
+        ),
+        nullable=False,
+    )
     status = Column(
-    Enum(EstadoEnvio, values_callable=lambda enum_class: [member.value for member in enum_class]),
-    server_default=EstadoEnvio.PENDIENTE.value,
-    nullable=False,)
+        Enum(
+            EstadoEnvio,
+            values_callable=lambda enum_class: [member.value for member in enum_class],
+        ),
+        server_default=EstadoEnvio.PENDIENTE.value,
+        nullable=False,
+    )
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
