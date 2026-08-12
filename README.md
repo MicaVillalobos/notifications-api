@@ -1,6 +1,6 @@
 # Notifications API
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/MicaVillalobos/notifications-api/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/MicaVillalobos/notifications-api/tree/master)
-[![Coverage Status](https://coveralls.io/repos/github/MicaVillalobos/notifications-api/badge.svg?branch=master)](https://coveralls.io/github/MicaVillalobos/notifications-api?branch=master)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/MicaVillalobos/notifications-api/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/MicaVillalobos/notifications-api/tree/main)
+[![Coverage Status](https://coveralls.io/repos/github/MicaVillalobos/notifications-api/badge.svg?branch=main)](https://coveralls.io/github/MicaVillalobos/notifications-api?branch=main)
 [![Python](https://img.shields.io/badge/python-3.14-blue)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.141-009688)](https://fastapi.tiangolo.com/)
 [![Docker](https://img.shields.io/badge/docker-ready-2496ED)](https://www.docker.com/)
